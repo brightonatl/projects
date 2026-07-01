@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brighton ATL Lab - Student Projects Portal</title>
+    <title>Brighton Project Portal - ATL Student Dashboard</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts (Montserrat) -->
+    <!-- Google Fonts (Montserrat for clean modern headers, Roboto for standard material body text) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -17,311 +17,316 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
+                        sans: ['Roboto', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
                     },
                     colors: {
-                        brutalYellow: '#FACC15',
-                        brutalCyan: '#22D3EE',
-                        brutalPurple: '#A855F7',
-                        brutalGreen: '#4ADE80',
-                        brutalBg: '#0D0F12',
-                        brutalCard: '#181B20',
+                        // Google Material Design 3 Palette (Playful Blue and Red theme)
+                        mdPrimary: '#0B57D0',       // Custom Royal Blue (Primary)
+                        mdPrimaryContainer: '#D3E3FD', // Light Blue Container
+                        mdOnPrimaryContainer: '#041E49',
+                        
+                        mdSecondary: '#DB4437',     // Playful Red (Secondary)
+                        mdSecondaryContainer: '#FAD2CF', // Light Red Container
+                        mdOnSecondaryContainer: '#3B0804',
+                        
+                        mdBackground: '#F8F9FA',    // Neutral Light Background (Material Surface)
+                        mdSurface: '#FFFFFF',       // Card Surface
+                        mdSurfaceVariant: '#E1E2EC', // Outer container borders
+                        mdOnSurface: '#1F1F1F',     // Core Dark Grey text
+                        mdOnSurfaceVariant: '#44474F', // Medium grey text
+                        mdTertiary: '#FACC15',      // Playful yellow accent
+                    },
+                    boxShadow: {
+                        'md3-1': '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+                        'md3-2': '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+                        'md3-3': '0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15)'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Neo-Brutalist Utility Classes */
-        .brutal-card {
-            background-color: #181B20;
-            border: 3px solid #FFFFFF;
-            box-shadow: 6px 6px 0px 0px #FFFFFF;
-            transition: all 0.2s ease-in-out;
+        body {
+            background-color: #F0F4F9; /* Material 3 Surface Container Low */
         }
-        .brutal-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px 0px #FFFFFF;
-        }
-        .brutal-card-cyan {
-            background-color: #181B20;
-            border: 3px solid #22D3EE;
-            box-shadow: 6px 6px 0px 0px #22D3EE;
-            transition: all 0.2s ease-in-out;
-        }
-        .brutal-card-cyan:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px 0px #22D3EE;
-        }
-        .brutal-card-purple {
-            background-color: #181B20;
-            border: 3px solid #A855F7;
-            box-shadow: 6px 6px 0px 0px #A855F7;
-            transition: all 0.2s ease-in-out;
-        }
-        .brutal-card-purple:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px 0px #A855F7;
-        }
-        .brutal-btn-yellow {
-            background-color: #FACC15;
-            color: #000000;
-            border: 3px solid #FFFFFF;
-            box-shadow: 4px 4px 0px 0px #FFFFFF;
-            transition: all 0.1s ease-in-out;
-            font-weight: 800;
-        }
-        .brutal-btn-yellow:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 2px 2px 0px 0px #FFFFFF;
-        }
-        .brutal-btn-cyan {
-            background-color: #22D3EE;
-            color: #000000;
-            border: 3px solid #FFFFFF;
-            box-shadow: 4px 4px 0px 0px #FFFFFF;
-            transition: all 0.1s ease-in-out;
-            font-weight: 800;
-        }
-        .brutal-btn-cyan:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 2px 2px 0px 0px #FFFFFF;
-        }
-        .brutal-btn-black {
-            background-color: #0D0F12;
-            color: #FFFFFF;
-            border: 3px solid #FFFFFF;
-            box-shadow: 4px 4px 0px 0px #FFFFFF;
-            transition: all 0.1s ease-in-out;
-            font-weight: 800;
-        }
-        .brutal-btn-black:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 2px 2px 0px 0px #FFFFFF;
+        /* Custom smooth transition for MD3 tabs */
+        .tab-indicator {
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
         }
     </style>
 </head>
-<body class="bg-brutalBg text-white min-h-screen antialiased selection:bg-brutalYellow selection:text-black font-sans pb-16">
+<body class="text-mdOnSurface font-sans antialiased pb-16">
 
-    <!-- Header / Navbar -->
-    <header class="border-b-4 border-white bg-brutalCard sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-brutalYellow text-black border-2 border-white p-2.5 shadow-[3px_3px_0px_0px_#FFFFFF]">
-                    <i data-lucide="cpu" class="w-6 h-6 stroke-[2.5]"></i>
+    <!-- Material Design 3 Header / Top App Bar (Sticky & Responsive) -->
+    <header class="bg-mdSurface sticky top-0 z-50 shadow-md3-1 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between py-3 md:h-20 gap-4">
+                
+                <!-- Left Title Section -->
+                <div class="flex items-center space-x-3.5">
+                    <div class="bg-mdPrimary text-white p-3 rounded-2xl shadow-md3-1 flex items-center justify-center">
+                        <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display text-lg sm:text-xl font-extrabold tracking-tight text-mdPrimary">
+                            Brighton Project Portal
+                        </h1>
+                        <p class="text-[10px] sm:text-xs font-bold text-mdOnSurfaceVariant tracking-widest uppercase flex items-center gap-1.5 mt-0.5">
+                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-mdSecondary animate-pulse"></span>
+                            Tinker • Code • Create
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-black tracking-tighter uppercase text-white">
-                        Brighton ATL Lab
-                    </h1>
-                    <p class="text-[9px] text-brutalCyan uppercase tracking-widest font-bold">Innovation, Prototyping & Coding</p>
+
+                <!-- Right Interaction Controls (Unified Tab Control + Badge) -->
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                    
+                    <!-- MD3 Segmented / Sliding Tab Controller -->
+                    <div class="bg-[#E9EEF6] p-1.5 rounded-full flex items-center relative w-full sm:w-auto">
+                        <button onclick="switchTab('minor')" id="tab-btn-minor" class="flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 bg-mdPrimary text-white shadow-md3-1">
+                            <i data-lucide="file-edit" class="w-4 h-4"></i>
+                            <span>Minor Project (15M)</span>
+                        </button>
+                        <button onclick="switchTab('major')" id="tab-btn-major" class="flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 text-mdOnSurfaceVariant hover:bg-[#D3E3FD]/50">
+                            <i data-lucide="rocket" class="w-4 h-4 text-mdSecondary"></i>
+                            <span>Major Project (20M)</span>
+                        </button>
+                    </div>
+
+                    <!-- Session Tag (Hidden on small mobile, beautiful on tablet+) -->
+                    <div class="hidden sm:inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-[#E9EEF6] text-mdPrimary border border-[#D3E3FD]">
+                        <span class="w-2 h-2 rounded-full bg-mdSecondary mr-2 animate-pulse"></span>
+                        Session 2026
+                    </div>
                 </div>
-            </div>
-            
-            <div class="flex items-center">
-                <span class="inline-flex items-center px-4 py-1.5 border-2 border-white bg-brutalBg text-xs font-black uppercase text-brutalYellow shadow-[3px_3px_0px_0px_#FFFFFF]">
-                    <span class="w-2.5 h-2.5 bg-brutalGreen border border-black mr-2 animate-pulse"></span>
-                    Session 2026
-                </span>
+
             </div>
         </div>
     </header>
 
     <!-- Main Content Wrapper -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         
-        <!-- Hero Section -->
-        <div class="text-left mb-16 border-4 border-white bg-brutalCard p-8 sm:p-12 shadow-[8px_8px_0px_0px_#FACC15] relative overflow-hidden">
-            <div class="absolute right-4 top-4 text-white/5 font-black text-8xl select-none pointer-events-none uppercase">ATL</div>
-            <div class="inline-flex items-center space-x-2 px-3 py-1 border-2 border-white bg-brutalBg text-white mb-6 text-xs font-bold uppercase">
-                <i data-lucide="sparkles" class="w-4 h-4 text-brutalYellow"></i>
-                <span>Tinker, Design, Prototyping Space</span>
-            </div>
-            <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-6 leading-none">
-                Student <span class="text-brutalYellow bg-black px-2 py-1 border border-white inline-block mt-1">Project Portal</span>
-            </h2>
-            <p class="text-sm sm:text-base text-slate-300 mb-8 max-w-2xl font-medium leading-relaxed">
-                Welcome to the Brighton School Atal Tinkering Lab repository dashboard. We have two key project assessment divisions structured to test conceptual mapping and physical engineering realization.
-            </p>
+        <!-- Hero Card (Material Design 3 Banner) -->
+        <div class="bg-mdPrimaryContainer text-mdOnPrimaryContainer rounded-[32px] p-6 sm:p-10 shadow-md3-1 mb-10 relative overflow-hidden border border-white/20">
+            <!-- Background Accent Circles -->
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-mdPrimary/5 rounded-full pointer-events-none"></div>
+            <div class="absolute -right-10 -bottom-20 w-64 h-64 bg-mdSecondary/5 rounded-full pointer-events-none"></div>
             
-            <!-- Quick Division Links -->
-            <div class="flex flex-col sm:flex-row gap-4 max-w-lg">
-                <button onclick="switchTab('minor')" class="flex-1 text-left p-4 border-3 border-white bg-brutalBg hover:bg-slate-900 transition-colors shadow-[4px_4px_0px_0px_#22D3EE] group">
-                    <span class="block text-[10px] text-brutalCyan font-extrabold uppercase tracking-widest">Assessment One</span>
-                    <span class="block text-xl font-black text-white group-hover:text-brutalYellow transition-colors">Minor Projects (15M)</span>
-                </button>
-                <button onclick="switchTab('major')" class="flex-1 text-left p-4 border-3 border-white bg-brutalBg hover:bg-slate-900 transition-colors shadow-[4px_4px_0px_0px_#A855F7] group">
-                    <span class="block text-[10px] text-brutalPurple font-extrabold uppercase tracking-widest">Assessment Two</span>
-                    <span class="block text-xl font-black text-white group-hover:text-brutalYellow transition-colors">Major Projects (20M)</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Primary Project Selector Segment -->
-        <div id="projects-section" class="scroll-mt-24 mb-16">
-            
-            <!-- Neo-Brutalist Tabs Navigation -->
-            <div class="flex flex-col sm:flex-row gap-4 mb-12">
-                <button onclick="switchTab('minor')" id="tab-btn-minor" class="flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-black bg-brutalCyan shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3">
-                    <i data-lucide="file-text" class="w-5 h-5"></i>
-                    <span>Minor Projects (15 Marks)</span>
-                </button>
-                <button onclick="switchTab('major')" id="tab-btn-major" class="flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-white bg-brutalBg hover:bg-slate-900 shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3">
-                    <i data-lucide="rocket" class="w-5 h-5"></i>
-                    <span>Major Projects (20 Marks)</span>
-                </button>
-            </div>
-
-            <!-- TAB CONTENT: MINOR PROJECTS -->
-            <div id="content-minor" class="space-y-10 transition-all duration-300 opacity-100 transform translate-y-0">
-                
-                <!-- Submission Info Hub -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                    
-                    <!-- Guidelines Card -->
-                    <div class="lg:col-span-7 brutal-card-cyan p-8 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center space-x-2 text-brutalCyan mb-4">
-                                <i data-lucide="award" class="w-5 h-5"></i>
-                                <span class="text-xs uppercase tracking-wider font-extrabold">Part 1: Idea Mapping</span>
-                            </div>
-                            <h3 class="text-2xl sm:text-3xl font-black uppercase text-white mb-4">
-                                Minor Projects <span class="text-brutalCyan">(15M)</span>
-                            </h3>
-                            <p class="text-sm text-slate-300 leading-relaxed mb-6">
-                                Minor projects are conceptual setups where students are tested on their ideas and block layouts. 
-                                There is <strong class="text-white underline decoration-brutalYellow">no physical component build required</strong> at this stage. Submissions must be compiled and submitted purely in softcopy formats.
-                            </p>
-
-                            <!-- Submission Mediums -->
-                            <div class="bg-black/40 border-2 border-brutalCyan p-5 mb-6">
-                                <h4 class="text-xs uppercase tracking-widest font-black text-white mb-3 flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-brutalCyan inline-block"></span> Submission Instructions:
-                                </h4>
-                                <ul class="space-y-3.5 text-xs text-slate-400 font-medium">
-                                    <li class="flex items-start gap-2">
-                                        <i data-lucide="check-square" class="w-4 h-4 text-brutalCyan shrink-0 mt-0.5"></i>
-                                        <span>Prepare your proposal idea in <strong class="text-white">PPT, PDF, or DOCX</strong> format.</span>
-                                    </li>
-                                    <li class="flex items-start gap-2">
-                                        <i data-lucide="check-square" class="w-4 h-4 text-brutalCyan shrink-0 mt-0.5"></i>
-                                        <span>Fill in the official Google Form provided in your minor project file instructions.</span>
-                                    </li>
-                                    <li class="flex items-start gap-2">
-                                        <i data-lucide="check-square" class="w-4 h-4 text-brutalCyan shrink-0 mt-0.5"></i>
-                                        <span>Either upload the softcopy via the form <strong class="text-white">OR</strong> hand over the file directly to your respected Robotics Teacher.</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Rubric Table -->
-                        <div class="border-t-2 border-white/20 pt-6">
-                            <h4 class="text-xs uppercase tracking-wider font-extrabold text-slate-400 mb-4">Rubric Weightage Break-down:</h4>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalCyan">3M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Idea / Novelty</span>
-                                </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalCyan">6M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Circuit Flow</span>
-                                </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalCyan">3M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Teacher Viva</span>
-                                </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalCyan">3M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Softcopy Report</span>
-                                </div>
-                            </div>
-                        </div>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+                <!-- Left side Content -->
+                <div class="max-w-2xl">
+                    <div class="flex flex-wrap gap-2.5 mb-4">
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-[#FFFFFF]/80 text-mdPrimary shadow-sm">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-mdTertiary fill-mdTertiary"></i>
+                            Brighton Lab Space
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-black bg-mdSecondary text-white shadow-sm animate-pulse">
+                            <i data-lucide="alarm-clock" class="w-3.5 h-3.5"></i>
+                            Deadline: 4th September 2026
+                        </span>
                     </div>
+                    
+                    <h2 class="font-display text-2xl sm:text-4xl font-extrabold tracking-tight text-[#041E49] mb-4 leading-tight">
+                        Welcome, <span class="text-mdPrimary">Young Creators!</span> 🚀
+                    </h2>
+                    <p class="text-sm sm:text-base text-mdOnSurfaceVariant font-medium leading-relaxed">
+                        Welcome to your official school ATL Tinkering Lab repository portal! Explore guidelines, track milestones, and submit your entries. We are looking forward to seeing your amazing inventions come to life!
+                    </p>
+                </div>
 
-                    <!-- Idea Template & Direct Form Submission Card -->
-                    <div class="lg:col-span-5 flex flex-col gap-6">
-                        
-                        <!-- Idea File Blueprint Card -->
-                        <div class="brutal-card p-6 bg-brutalCard border-white flex-1 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-white/10">
-                                    <h3 class="text-sm font-black uppercase text-white tracking-widest flex items-center gap-2">
-                                        <i data-lucide="layers" class="w-4 h-4 text-brutalCyan"></i>
-                                        <span>Idea File Blueprint</span>
-                                    </h3>
-                                    <span class="text-[9px] bg-red-500 text-white font-extrabold px-2 py-0.5 border border-white">MANDATORY</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-4 font-semibold">Ensure your softcopy (PPT / PDF / DOCX) contains these specific parameters:</p>
-
-                                <ul class="space-y-3 text-xs">
-                                    <li class="flex items-center gap-2 bg-black/40 p-2 border border-white/10">
-                                        <span class="w-5 h-5 bg-brutalCyan text-black font-black text-[10px] flex items-center justify-center border border-white">01</span>
-                                        <span class="font-bold">Project Name</span>
-                                    </li>
-                                    <li class="flex items-center gap-2 bg-black/40 p-2 border border-white/10">
-                                        <span class="w-5 h-5 bg-brutalCyan text-black font-black text-[10px] flex items-center justify-center border border-white">02</span>
-                                        <span class="font-bold">Problem you are solving</span>
-                                    </li>
-                                    <li class="flex items-center gap-2 bg-black/40 p-2 border border-white/10">
-                                        <span class="w-5 h-5 bg-brutalCyan text-black font-black text-[10px] flex items-center justify-center border border-white">03</span>
-                                        <span class="font-bold">Proposed Solution & Working</span>
-                                    </li>
-                                    <li class="flex items-center gap-2 bg-black/40 p-2 border border-white/10">
-                                        <span class="w-5 h-5 bg-brutalCyan text-black font-black text-[10px] flex items-center justify-center border border-white">04</span>
-                                        <span class="font-bold">Required Items & Costing</span>
-                                    </li>
-                                    <li class="flex items-center gap-2 bg-black/40 p-2 border border-white/10">
-                                        <span class="w-5 h-5 bg-brutalCyan text-black font-black text-[10px] flex items-center justify-center border border-white">05</span>
-                                        <span class="font-bold">Team Members Name with Class & Section</span>
-                                    </li>
-                                </ul>
-                            </div>
+                <!-- Right side Countdown Controller -->
+                <div class="bg-white rounded-3xl p-5 shadow-md3-2 border border-[#E1E2EC] min-w-[280px] lg:min-w-[320px]">
+                    <span class="text-[11px] font-bold text-mdPrimary uppercase tracking-widest block mb-3 text-center">
+                        ⏳ Minor Submission Countdown
+                    </span>
+                    <div class="grid grid-cols-4 gap-2 text-center">
+                        <!-- Days -->
+                        <div class="bg-mdBackground rounded-2xl p-2.5 border border-slate-100">
+                            <span id="days" class="block text-xl sm:text-2xl font-black text-mdPrimary">00</span>
+                            <span class="block text-[8px] uppercase tracking-wider font-bold text-[#44474F] mt-0.5">Days</span>
                         </div>
-
-                        <!-- NEW: SUBMIT YOUR MINOR PROJECT CARD -->
-                        <div class="border-4 border-brutalYellow bg-black p-6 shadow-[5px_5px_0px_0px_#FACC15] flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center gap-2 text-brutalYellow mb-2">
-                                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
-                                    <h4 class="font-black uppercase text-sm tracking-wider">Submit Minor Project</h4>
-                                </div>
-                                <p class="text-xs text-slate-300 leading-relaxed mb-4">
-                                    Ready with your softcopy file? Submit your project via the official Google Form portal below.
-                                </p>
-                            </div>
-                            <a href="https://forms.gle/HEARuai8QR7AovJc6" target="_blank" class="brutal-btn-yellow w-full py-3.5 text-center text-xs tracking-wider uppercase block">
-                                Open Google Form Submission
-                            </a>
+                        <!-- Hours -->
+                        <div class="bg-mdBackground rounded-2xl p-2.5 border border-slate-100">
+                            <span id="hours" class="block text-xl sm:text-2xl font-black text-mdPrimary">00</span>
+                            <span class="block text-[8px] uppercase tracking-wider font-bold text-[#44474F] mt-0.5">Hours</span>
+                        </div>
+                        <!-- Minutes -->
+                        <div class="bg-mdBackground rounded-2xl p-2.5 border border-slate-100">
+                            <span id="minutes" class="block text-xl sm:text-2xl font-black text-mdPrimary">00</span>
+                            <span class="block text-[8px] uppercase tracking-wider font-bold text-[#44474F] mt-0.5">Mins</span>
+                        </div>
+                        <!-- Seconds -->
+                        <div class="bg-mdBackground rounded-2xl p-2.5 border border-slate-100">
+                            <span id="seconds" class="block text-xl sm:text-2xl font-black text-mdSecondary">00</span>
+                            <span class="block text-[8px] uppercase tracking-wider font-bold text-[#44474F] mt-0.5">Secs</span>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Primary Display Content Segment -->
+        <div id="projects-section" class="scroll-mt-28">
+
+            <!-- TAB CONTENT: MINOR PROJECTS -->
+            <div id="content-minor" class="space-y-8 transition-all duration-300 opacity-100 transform translate-y-0">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    
+                    <!-- Left: Guidelines Card -->
+                    <div class="lg:col-span-7 bg-white rounded-[32px] p-6 sm:p-8 shadow-md3-1 border border-slate-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 text-mdPrimary mb-4">
+                                <i data-lucide="book-open" class="w-5 h-5"></i>
+                                <span class="text-xs uppercase tracking-wider font-extrabold">Part 1: Pitch & Plan</span>
+                            </div>
+                            
+                            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-mdOnSurface mb-3">
+                                Minor Projects <span class="text-mdPrimary font-semibold">(15 Marks)</span>
+                            </h3>
+                            
+                            <p class="text-sm text-mdOnSurfaceVariant leading-relaxed mb-6 font-medium">
+                                Minor projects are exciting brainstorming tasks! You only need to pitch a super cool science or robotics idea. 
+                                <span class="block mt-2.5 p-3 rounded-2xl bg-[#D3E3FD]/50 border-l-4 border-mdPrimary text-xs text-mdOnPrimaryContainer font-bold">
+                                    🎉 No physical hardware building is needed yet! It is strictly a SOFTCOPY (PPT/PDF/DOCX) submission.
+                                </span>
+                            </p>
+
+                            <!-- Submission Steps -->
+                            <div class="bg-mdBackground rounded-2xl p-5 border border-[#E1E2EC] mb-6">
+                                <h4 class="text-xs uppercase tracking-widest font-black text-mdPrimary mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-mdSecondary inline-block"></span> Submission Guide:
+                                </h4>
+                                <ul class="space-y-3.5 text-xs text-mdOnSurfaceVariant font-medium">
+                                    <li class="flex items-start gap-3">
+                                        <div class="bg-mdPrimary text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</div>
+                                        <span>Build your idea file using <strong class="text-mdOnSurface">PowerPoint (.PPT)</strong>, <strong class="text-mdOnSurface">PDF</strong>, or <strong class="text-mdOnSurface">Word (.DOCX)</strong> formats.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <div class="bg-mdPrimary text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</div>
+                                        <span>Fill up the easy submission Google Form linked on the right.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <div class="bg-mdPrimary text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</div>
+                                        <span>Upload your file directly inside the form <strong class="text-mdOnSurface">OR</strong> hand over a digital copy to your Robotics Teacher.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Score Card (Rubric) -->
+                        <div class="border-t border-[#E1E2EC] pt-6">
+                            <h4 class="text-xs uppercase tracking-wider font-bold text-mdOnSurfaceVariant mb-4 flex items-center gap-1.5">
+                                <i data-lucide="award" class="w-4 h-4 text-mdPrimary"></i>
+                                <span>🎒 Score Card Weightage</span>
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdPrimary">3M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Idea Concept</span>
+                                </div>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdPrimary">6M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Circuit Flow</span>
+                                </div>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdPrimary">3M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Teacher Viva</span>
+                                </div>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdPrimary">3M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">File Quality</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Slide blueprint & Submission Portal -->
+                    <div class="lg:col-span-5 flex flex-col gap-6">
+                        
+                        <!-- Slide Details Card -->
+                        <div class="bg-white rounded-[32px] p-6 shadow-md3-1 border border-slate-100 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#E1E2EC]">
+                                    <h3 class="text-xs font-bold uppercase text-mdOnSurfaceVariant tracking-wider flex items-center gap-1.5">
+                                        <i data-lucide="layers" class="w-4 h-4 text-mdPrimary"></i>
+                                        <span>Slide Blueprint</span>
+                                    </h3>
+                                    <span class="text-[9px] bg-mdSecondary/10 text-mdSecondary border border-mdSecondary/25 font-bold px-2.5 py-0.5 rounded-full">REQUIRED</span>
+                                </div>
+                                <p class="text-[11px] text-[#44474F] mb-4 font-semibold">Verify your file highlights these five key segments:</p>
+
+                                <ul class="space-y-2.5 text-xs font-semibold">
+                                    <li class="flex items-center gap-3 bg-mdBackground p-2.5 rounded-xl border border-slate-100">
+                                        <span class="w-6 h-6 rounded-lg bg-mdPrimaryContainer text-mdOnPrimaryContainer font-black text-[10px] flex items-center justify-center">01</span>
+                                        <span class="text-mdOnSurface">Project Name 🏷️</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 bg-mdBackground p-2.5 rounded-xl border border-slate-100">
+                                        <span class="w-6 h-6 rounded-lg bg-mdPrimaryContainer text-mdOnPrimaryContainer font-black text-[10px] flex items-center justify-center">02</span>
+                                        <span class="text-mdOnSurface">Problem Statement ❓</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 bg-mdBackground p-2.5 rounded-xl border border-slate-100">
+                                        <span class="w-6 h-6 rounded-lg bg-mdPrimaryContainer text-mdOnPrimaryContainer font-black text-[10px] flex items-center justify-center">03</span>
+                                        <span class="text-mdOnSurface">Solution & Working 💡</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 bg-mdBackground p-2.5 rounded-xl border border-slate-100">
+                                        <span class="w-6 h-6 rounded-lg bg-mdPrimaryContainer text-mdOnPrimaryContainer font-black text-[10px] flex items-center justify-center">04</span>
+                                        <span class="text-mdOnSurface">Required Items & Costing 🛠️</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 bg-mdBackground p-2.5 rounded-xl border border-slate-100">
+                                        <span class="w-6 h-6 rounded-lg bg-mdPrimaryContainer text-mdOnPrimaryContainer font-black text-[10px] flex items-center justify-center">05</span>
+                                        <span class="text-mdOnSurface">Team details with Class & Section 👥</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Submit Box -->
+                        <div class="bg-mdSecondaryContainer text-mdOnSecondaryContainer rounded-[32px] p-6 shadow-md3-2 border border-white/40 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 text-mdSecondary mb-2">
+                                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                                    <h4 class="font-display font-extrabold uppercase text-xs tracking-wider">Ready to submit?</h4>
+                                </div>
+                                <p class="text-xs text-[#5C1A14] leading-relaxed mb-4 font-semibold">
+                                    Upload your digital files directly via our designated student portal below:
+                                </p>
+                            </div>
+                            <a href="https://forms.gle/HEARuai8QR7AovJc6" target="_blank" class="bg-mdSecondary hover:bg-red-600 text-white rounded-full py-3.5 text-center text-xs font-black uppercase tracking-wider block shadow-md3-1 hover:shadow-md3-2 transition-all">
+                                🚀 Click to Submit Project File!
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
 
             <!-- TAB CONTENT: MAJOR PROJECTS -->
-            <div id="content-major" class="space-y-10 hidden transition-all duration-300 opacity-0 transform translate-y-4">
+            <div id="content-major" class="space-y-8 hidden transition-all duration-300 opacity-0 transform translate-y-4">
                 
-                <!-- Transition Principle Alert -->
-                <div class="border-4 border-white bg-brutalCard p-6 sm:p-8 shadow-[6px_6px_0px_0px_#A855F7] relative overflow-hidden">
+                <!-- Transition Principle Alert Card -->
+                <div class="bg-[#E9EEF6] border-2 border-mdPrimary/25 rounded-[32px] p-6 shadow-md3-1 relative overflow-hidden">
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
                         <div class="flex items-start space-x-4">
-                            <div class="p-3 bg-brutalPurple text-white border-2 border-white shadow-[3px_3px_0px_0px_#FFFFFF] shrink-0">
-                                <i data-lucide="refresh-cw" class="w-6 h-6 stroke-[2.5]"></i>
+                            <div class="p-3 bg-mdPrimary text-white rounded-2xl shadow-sm shrink-0">
+                                <i data-lucide="stars" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg font-black uppercase text-white tracking-tight flex items-center gap-2">
-                                    <span>The Transition Rule</span>
-                                    <span class="text-[9px] bg-brutalPurple text-white font-extrabold px-2 py-0.5 border border-white">IMPORTANT</span>
+                                <h3 class="font-display text-base font-extrabold text-mdOnPrimaryContainer tracking-tight">
+                                    🌟 The Golden Rule of Transition 🌟
                                 </h3>
-                                <p class="text-slate-300 text-xs mt-1.5 max-w-2xl leading-relaxed font-semibold">
-                                    Students must transition from Minor to Major <span class="text-brutalPurple underline">with the same idea</span>. The exact concept submitted in your Minor Project softcopy must now be transformed into a functional, physical reality in the ATL Lab.
+                                <p class="text-[#44474F] text-xs mt-1 max-w-2xl leading-relaxed font-semibold">
+                                    To unlock Major Project status, you must keep the <strong class="text-mdPrimary underline">exact same idea</strong> you submitted in your Minor softcopy slides. Your primary goal is to turn those sketches into a real, working physical machine!
                                 </p>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2 shrink-0 bg-black p-2 border border-white/20 self-start md:self-auto text-xs">
-                            <span class="font-black text-slate-400 uppercase">Concept</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4 text-brutalPurple"></i>
-                            <span class="font-black text-brutalPurple uppercase">Physical Build</span>
+                        <div class="flex items-center space-x-2 shrink-0 bg-white px-3.5 py-1.5 rounded-full border border-[#D3E3FD] text-xs font-bold text-mdPrimary">
+                            <span>Idea Slide</span>
+                            <i data-lucide="arrow-right-circle" class="w-4 h-4 text-mdSecondary"></i>
+                            <span class="text-mdSecondary">Real Robot</span>
                         </div>
                     </div>
                 </div>
@@ -329,249 +334,256 @@
                 <!-- Overview & Guidelines -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                     
-                    <!-- Left Column: Detailed Info -->
-                    <div class="lg:col-span-12 brutal-card-purple p-8 flex flex-col justify-between">
+                    <div class="lg:col-span-12 bg-white rounded-[32px] p-6 sm:p-8 shadow-md3-1 border border-slate-100 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center space-x-2 text-brutalPurple mb-4">
-                                <i data-lucide="settings" class="w-5 h-5"></i>
-                                <span class="text-xs uppercase tracking-wider font-extrabold">Part 2: Hardware Prototyping</span>
+                            <div class="flex items-center space-x-2 text-mdSecondary mb-4">
+                                <i data-lucide="toy-brick" class="w-5 h-5"></i>
+                                <span class="text-xs uppercase tracking-wider font-extrabold">Part 2: Real-World Prototyping</span>
                             </div>
-                            <h3 class="text-2xl sm:text-3xl font-black uppercase text-white mb-4">
-                                Major Projects <span class="text-brutalPurple">(20M)</span>
+                            
+                            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-mdOnSurface mb-3">
+                                Major Projects <span class="text-mdSecondary font-semibold">(20 Marks)</span>
                             </h3>
-                            <p class="text-sm text-slate-300 leading-relaxed mb-6">
-                                In this division, you are building the physical model of the idea you previously pitched. Evaluate component connections, construct your code structure, and calibrate sensors securely. You will present a fully functioning hardware project during evaluation.
+                            
+                            <p class="text-sm text-mdOnSurfaceVariant leading-relaxed mb-6 font-semibold">
+                                This is where the real fun begins! You will take the exact list of sensors and costing parameters outlined in your Minor proposal to construct your physical system. Solder modules, configure microcontroller code loops, calibrate variables, and wrap up your components neatly.
                             </p>
                             
-                            <!-- Key Characteristics -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black/40 p-4 border border-brutalPurple mb-6">
+                            <!-- MD3 Grid Parameters -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-mdBackground p-4 rounded-2xl border border-[#E1E2EC] mb-6 font-semibold">
                                 <div class="p-2">
-                                    <span class="block text-xs uppercase text-brutalPurple font-black mb-1">Team Identity:</span>
-                                    <span class="text-xs text-slate-400">Keep the same team members declared in the Minor softcopy.</span>
+                                    <span class="block text-xs uppercase text-mdSecondary font-extrabold mb-1">🎮 Teammates:</span>
+                                    <span class="text-xs text-[#44474F]">Work with the exact same partners listed in your initial Minor softcopy submission.</span>
                                 </div>
-                                <div class="p-2 border-t md:border-t-0 md:border-l border-white/10">
-                                    <span class="block text-xs uppercase text-brutalPurple font-black mb-1">Inventory Desk:</span>
-                                    <span class="text-xs text-slate-400">Reference your Costing table to request modules and sensors from lab coordinators.</span>
+                                <div class="p-2 border-t md:border-t-0 md:border-l border-[#E1E2EC]">
+                                    <span class="block text-xs uppercase text-mdSecondary font-extrabold mb-1">📦 Lab Stock Desk:</span>
+                                    <span class="text-xs text-[#44474F]">Reference your costing sheet to check out active microcontrollers and sensors from coordinates.</span>
                                 </div>
-                                <div class="p-2 border-t md:border-t-0 md:border-l border-white/10">
-                                    <span class="block text-xs uppercase text-brutalPurple font-black mb-1">Final Deliverables:</span>
-                                    <span class="text-xs text-slate-400">A physical, functioning model, live demo testing runs, and clean wiring.</span>
+                                <div class="p-2 border-t md:border-t-0 md:border-l border-[#E1E2EC]">
+                                    <span class="block text-xs uppercase text-mdSecondary font-extrabold mb-1">🔥 Final Deliverable:</span>
+                                    <span class="text-xs text-[#44474F]">Present a completely functioning, cleanly integrated physical prototype with live diagnostics.</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Rubric Table -->
-                        <div class="border-t-2 border-white/20 pt-6">
-                            <h4 class="text-xs uppercase tracking-wider font-extrabold text-slate-400 mb-4">Rubric Weightage Break-down:</h4>
+                        <!-- Score Card (Rubric) -->
+                        <div class="border-t border-[#E1E2EC] pt-6">
+                            <h4 class="text-xs uppercase tracking-wider font-bold text-mdOnSurfaceVariant mb-4 flex items-center gap-1.5">
+                                <i data-lucide="award" class="w-4 h-4 text-mdSecondary"></i>
+                                <span>🎒 Score Card Weightage</span>
+                            </h4>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalPurple">4M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Problem Depth</span>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdSecondary">4M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Problem Depth</span>
                                 </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalPurple">6M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Hardware Build</span>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdSecondary">6M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Hardware Build</span>
                                 </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalPurple">4M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">System Testing</span>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdSecondary">4M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Calibrations</span>
                                 </div>
-                                <div class="bg-black/50 p-3 border border-slate-700">
-                                    <span class="block text-xl font-black text-brutalPurple">6M</span>
-                                    <span class="text-[9px] text-slate-400 uppercase font-bold tracking-tight">Practical Demonstration</span>
+                                <div class="bg-mdBackground p-3 rounded-2xl border border-slate-100">
+                                    <span class="block text-lg font-black text-mdSecondary">6M</span>
+                                    <span class="text-[9px] text-[#44474F] uppercase font-bold tracking-tight">Live Practical Demo</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
 
-        <!-- Student Progress Steps & Guidelines -->
-        <div class="mt-24 border-t-4 border-white pt-16">
-            <h3 class="text-2xl sm:text-3xl font-black uppercase text-white text-center mb-4">
-                Your 4-Step Lab Journey
+        <!-- Student Progress Steps & Guidelines (Playful Cards) -->
+        <div class="mt-20 border-t border-[#E1E2EC] pt-16">
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-[#041E49] text-center mb-3">
+                Your 4-Step Lab Journey 🚀
             </h3>
-            <p class="text-slate-400 text-xs sm:text-sm text-center max-w-xl mx-auto mb-12 font-medium">
-                Milestones mapped directly to the Brighton ATL Lab workflow requirements.
+            <p class="text-mdOnSurfaceVariant text-xs sm:text-sm text-center max-w-xl mx-auto mb-12 font-semibold">
+                Follow these clean checkpoints to complete your Brighton ATL Lab milestones with ease!
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <!-- Step 1 -->
-                <div class="border-3 border-white bg-brutalCard p-6 shadow-[4px_4px_0px_0px_#FFFFFF] relative">
-                    <span class="absolute -top-4 left-6 text-3xl font-black text-brutalBg bg-white border-2 border-black px-2 select-none">01</span>
-                    <div class="w-10 h-10 border-2 border-white bg-brutalCyan text-black flex items-center justify-center mb-4 mt-2 font-black">
+                <div class="bg-white rounded-[24px] p-6 shadow-md3-1 hover:shadow-md3-2 transition-all relative">
+                    <span class="absolute -top-3 left-6 text-[11px] font-black text-white bg-mdPrimary px-3 py-1 rounded-full uppercase tracking-wider">Step 1</span>
+                    <div class="w-10 h-10 rounded-2xl bg-mdPrimaryContainer text-mdPrimary flex items-center justify-center mb-4 mt-2">
                         <i data-lucide="edit-3" class="w-5 h-5"></i>
                     </div>
-                    <h4 class="font-black text-white mb-2 text-xs uppercase tracking-wide">Design & Ideate</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-semibold">Collect structural parameters inside your PPT/PDF/DOCX softcopy file for Minor submission.</p>
+                    <h4 class="font-display font-extrabold text-mdOnSurface mb-1.5 text-xs uppercase tracking-wide">Design & Plan</h4>
+                    <p class="text-xs text-[#44474F] leading-relaxed font-semibold">Gather all 5 core parameters inside your PPT/PDF slides for Minor entry.</p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="border-3 border-white bg-brutalCard p-6 shadow-[4px_4px_0px_0px_#FFFFFF] relative">
-                    <span class="absolute -top-4 left-6 text-3xl font-black text-brutalBg bg-white border-2 border-black px-2 select-none">02</span>
-                    <div class="w-10 h-10 border-2 border-white bg-brutalYellow text-black flex items-center justify-center mb-4 mt-2 font-black">
+                <div class="bg-white rounded-[24px] p-6 shadow-md3-1 hover:shadow-md3-2 transition-all relative">
+                    <span class="absolute -top-3 left-6 text-[11px] font-black text-white bg-mdPrimary px-3 py-1 rounded-full uppercase tracking-wider">Step 2</span>
+                    <div class="w-10 h-10 rounded-2xl bg-mdSecondaryContainer text-mdSecondary flex items-center justify-center mb-4 mt-2">
                         <i data-lucide="upload-cloud" class="w-5 h-5"></i>
                     </div>
-                    <h4 class="font-black text-white mb-2 text-xs uppercase tracking-wide">Submit File</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-semibold">Upload your file on the Google Form or provide a softcopy to the Robotics teacher.</p>
+                    <h4 class="font-display font-extrabold text-mdOnSurface mb-1.5 text-xs uppercase tracking-wide">Submit Softcopy</h4>
+                    <p class="text-xs text-[#44474F] leading-relaxed font-semibold">File your slides online using our student Google Form portal or present directly to the teacher.</p>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="border-3 border-white bg-brutalCard p-6 shadow-[4px_4px_0px_0px_#FFFFFF] relative">
-                    <span class="absolute -top-4 left-6 text-3xl font-black text-brutalBg bg-white border-2 border-black px-2 select-none">03</span>
-                    <div class="w-10 h-10 border-2 border-white bg-brutalPurple text-white flex items-center justify-center mb-4 mt-2 font-black">
-                        <i data-lucide="git-merge" class="w-5 h-5"></i>
+                <div class="bg-white rounded-[24px] p-6 shadow-md3-1 hover:shadow-md3-2 transition-all relative">
+                    <span class="absolute -top-3 left-6 text-[11px] font-black text-white bg-mdPrimary px-3 py-1 rounded-full uppercase tracking-wider">Step 3</span>
+                    <div class="w-10 h-10 rounded-2xl bg-[#E9EEF6] text-mdPrimary flex items-center justify-center mb-4 mt-2">
+                        <i data-lucide="shuffle" class="w-5 h-5"></i>
                     </div>
-                    <h4 class="font-black text-white mb-2 text-xs uppercase tracking-wide">Transition same idea</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-semibold">Transition from idea map into concrete parts list logic. Keep team names consistent.</p>
+                    <h4 class="font-display font-extrabold text-mdOnSurface mb-1.5 text-xs uppercase tracking-wide">Keep The Idea</h4>
+                    <p class="text-xs text-[#44474F] leading-relaxed font-semibold">Transfer your slides framework directly into a physical components checklist. Keep teams exact!</p>
                 </div>
 
                 <!-- Step 4 -->
-                <div class="border-3 border-white bg-brutalCard p-6 shadow-[4px_4px_0px_0px_#FFFFFF] relative">
-                    <span class="absolute -top-4 left-6 text-3xl font-black text-brutalBg bg-white border-2 border-black px-2 select-none">04</span>
-                    <div class="w-10 h-10 border-2 border-white bg-brutalGreen text-black flex items-center justify-center mb-4 mt-2 font-black">
-                        <i data-lucide="zap" class="w-5 h-5"></i>
+                <div class="bg-white rounded-[24px] p-6 shadow-md3-1 hover:shadow-md3-2 transition-all relative">
+                    <span class="absolute -top-3 left-6 text-[11px] font-black text-white bg-mdPrimary px-3 py-1 rounded-full uppercase tracking-wider">Step 4</span>
+                    <div class="w-10 h-10 rounded-2xl bg-[#D1F2D9] text-emerald-700 flex items-center justify-center mb-4 mt-2">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
                     </div>
-                    <h4 class="font-black text-white mb-2 text-xs uppercase tracking-wide">Build Physical Realization</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-semibold">Procure sensors, wire up hardware components, execute code, and host the final demo runs.</p>
+                    <h4 class="font-display font-extrabold text-mdOnSurface mb-1.5 text-xs uppercase tracking-wide">Build Physical Model</h4>
+                    <p class="text-xs text-[#44474F] leading-relaxed font-semibold">Check out components from lab organizers, build your physical design, test code, and demo.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Interactive FAQ / Guidelines Section -->
-        <div class="mt-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <!-- Interactive FAQ & Checklist Section -->
+        <div class="mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            <!-- Left Side: Interactive Lab Checklist -->
-            <div class="lg:col-span-5 border-4 border-white bg-brutalCard p-8 shadow-[6px_6px_0px_0px_#22D3EE]">
-                <h3 class="text-base font-black uppercase text-white mb-2 flex items-center space-x-2 tracking-wide">
-                    <i data-lucide="clipboard-list" class="w-5 h-5 text-brutalCyan"></i>
-                    <span>Readiness Checklist</span>
+            <!-- Left: Playful Checklist -->
+            <div class="lg:col-span-5 bg-white rounded-[32px] p-6 sm:p-8 shadow-md3-1 border border-slate-100">
+                <h3 class="text-base font-display font-extrabold uppercase text-mdOnSurface mb-2 flex items-center space-x-2 tracking-wide">
+                    <i data-lucide="clipboard-list" class="w-5 h-5 text-mdPrimary"></i>
+                    <span>Tinkering Checklist</span>
                 </h3>
-                <p class="text-xs text-slate-400 mb-6 font-semibold">Ensure you are aligned with standard milestones by checking the blocks off:</p>
+                <p class="text-xs text-mdOnSurfaceVariant mb-6 font-semibold">Keep track of your project journey progress parameters:</p>
                 
-                <div class="space-y-4" id="checklist-container">
-                    <!-- Check 1 -->
-                    <label class="flex items-start space-x-3 cursor-pointer group p-2.5 border border-white/10 hover:border-white/30 transition-colors bg-black/40">
-                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-brutalCyan rounded-none border-2 border-white bg-brutalBg w-4 h-4">
+                <div class="space-y-3.5" id="checklist-container">
+                    <!-- Checklist Item 1 -->
+                    <label class="flex items-start space-x-3.5 cursor-pointer group p-3 rounded-2xl border border-[#E1E2EC] hover:border-mdPrimary transition-all bg-mdBackground/50">
+                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-mdPrimary rounded-md w-4 h-4 cursor-pointer">
                         <div>
-                            <span class="text-xs font-black uppercase text-slate-200 group-hover:text-white transition-colors">Idea Softcopy (PPT/PDF/DOCX)</span>
-                            <p class="text-[10px] text-slate-500 font-medium">Must contain all 5 key blueprint descriptors.</p>
+                            <span class="text-xs font-bold text-mdOnSurface group-hover:text-mdPrimary transition-colors block uppercase">Idea Slides Prepared</span>
+                            <p class="text-[10px] text-slate-500 font-semibold">Your file incorporates all five required blueprint features.</p>
                         </div>
                     </label>
 
-                    <!-- Check 2 -->
-                    <label class="flex items-start space-x-3 cursor-pointer group p-2.5 border border-white/10 hover:border-white/30 transition-colors bg-black/40">
-                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-brutalCyan rounded-none border-2 border-white bg-brutalBg w-4 h-4">
+                    <!-- Checklist Item 2 -->
+                    <label class="flex items-start space-x-3.5 cursor-pointer group p-3 rounded-2xl border border-[#E1E2EC] hover:border-mdPrimary transition-all bg-mdBackground/50">
+                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-mdPrimary rounded-md w-4 h-4 cursor-pointer">
                         <div>
-                            <span class="text-xs font-black uppercase text-slate-200 group-hover:text-white transition-colors">Complete Team Registration Details</span>
-                            <p class="text-[10px] text-slate-500 font-medium">Names marked with exact Class & Section details inside the report.</p>
+                            <span class="text-xs font-bold text-mdOnSurface group-hover:text-mdPrimary transition-colors block uppercase">Class & Section Tagged</span>
+                            <p class="text-[10px] text-slate-500 font-semibold">Verified all teammate registrations are cleanly labelled.</p>
                         </div>
                     </label>
 
-                    <!-- Check 3 -->
-                    <label class="flex items-start space-x-3 cursor-pointer group p-2.5 border border-white/10 hover:border-white/30 transition-colors bg-black/40">
-                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-brutalCyan rounded-none border-2 border-white bg-brutalBg w-4 h-4">
+                    <!-- Checklist Item 3 -->
+                    <label class="flex items-start space-x-3.5 cursor-pointer group p-3 rounded-2xl border border-[#E1E2EC] hover:border-mdPrimary transition-all bg-mdBackground/50">
+                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-mdPrimary rounded-md w-4 h-4 cursor-pointer">
                         <div>
-                            <span class="text-xs font-black uppercase text-slate-200 group-hover:text-white transition-colors">Google Form Submitted</span>
-                            <p class="text-[10px] text-slate-500 font-medium">Or alternatively delivered the file to your Robotics teacher.</p>
+                            <span class="text-xs font-bold text-mdOnSurface group-hover:text-mdPrimary transition-colors block uppercase">Slides Shared / Uploaded</span>
+                            <p class="text-[10px] text-slate-500 font-semibold">File uploaded inside Google Form or handed to your robotics teacher.</p>
                         </div>
                     </label>
 
-                    <!-- Check 4 -->
-                    <label class="flex items-start space-x-3 cursor-pointer group p-2.5 border border-white/10 hover:border-white/30 transition-colors bg-black/40">
-                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-brutalCyan rounded-none border-2 border-white bg-brutalBg w-4 h-4">
+                    <!-- Checklist Item 4 -->
+                    <label class="flex items-start space-x-3.5 cursor-pointer group p-3 rounded-2xl border border-[#E1E2EC] hover:border-mdPrimary transition-all bg-mdBackground/50">
+                        <input type="checkbox" onchange="updateChecklistProgress()" class="mt-1 accent-mdPrimary rounded-md w-4 h-4 cursor-pointer">
                         <div>
-                            <span class="text-xs font-black uppercase text-slate-200 group-hover:text-white transition-colors">Minor-to-Major Integration Plan</span>
-                            <p class="text-[10px] text-slate-500 font-medium">Confirmed identical proposal scope mapped to physical lab components.</p>
+                            <span class="text-xs font-bold text-mdOnSurface group-hover:text-mdPrimary transition-colors block uppercase">Same-Idea Transition Plan</span>
+                            <p class="text-[10px] text-slate-500 font-semibold">Understood that the slides will evolve into physical hardware builds.</p>
                         </div>
                     </label>
                 </div>
 
-                <div class="mt-6 pt-6 border-t-2 border-white/10">
-                    <div class="flex justify-between items-center text-xs text-slate-400 mb-2 font-bold">
-                        <span>PROGRESS</span>
-                        <span id="checklist-percentage" class="font-black text-brutalCyan">0%</span>
+                <!-- MD3 progress indicator -->
+                <div class="mt-6 pt-6 border-t border-[#E1E2EC]">
+                    <div class="flex justify-between items-center text-xs text-mdOnSurfaceVariant mb-2.5 font-bold">
+                        <span>YOUR PROGRESS</span>
+                        <span id="checklist-percentage" class="font-extrabold text-mdPrimary">0%</span>
                     </div>
-                    <div class="w-full bg-black h-3 border border-white overflow-hidden">
-                        <div id="checklist-progress-bar" class="bg-brutalCyan h-full w-0 transition-all duration-300"></div>
+                    <div class="w-full bg-[#E9EEF6] h-3.5 rounded-full overflow-hidden border border-[#D3E3FD]">
+                        <div id="checklist-progress-bar" class="bg-gradient-to-r from-mdPrimary to-mdSecondary h-full w-0 transition-all duration-300"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side: Essential Lab Policies (Accordion FAQs) -->
+            <!-- Right: Playful Accordion FAQs -->
             <div class="lg:col-span-7 space-y-4">
-                <h3 class="text-base font-black uppercase text-white mb-6 flex items-center space-x-2 tracking-wide">
-                    <i data-lucide="help-circle" class="w-5 h-5 text-brutalYellow"></i>
-                    <span>FAQs & Lab Guidelines</span>
+                <h3 class="text-base font-display font-extrabold uppercase text-mdOnSurface mb-6 flex items-center space-x-2 tracking-wide">
+                    <i data-lucide="help-circle" class="w-5 h-5 text-mdSecondary"></i>
+                    <span>Tinkering FAQs</span>
                 </h3>
 
                 <!-- FAQ Item 1 -->
-                <div class="border-2 border-white bg-brutalCard overflow-hidden transition-all duration-150">
-                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left flex items-center justify-between text-slate-200 hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-black/20">
+                <div class="bg-white rounded-3xl border border-[#E1E2EC] overflow-hidden shadow-sm hover:shadow-md3-1 transition-all">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left flex items-center justify-between text-mdOnSurface hover:text-mdPrimary font-extrabold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-[#F0F4F9]/30">
                         <span>Do we need to buy or build physical hardware for Minor Projects?</span>
-                        <i id="faq-icon-1" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-brutalYellow"></i>
+                        <i id="faq-icon-1" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-mdSecondary"></i>
                     </button>
-                    <div id="faq-content-1" class="hidden px-6 pb-5 text-xs text-slate-400 leading-relaxed border-t border-white/10 pt-3 font-medium">
-                        No. Minor projects are strictly <strong class="text-white">softcopy-only submissions</strong> (PPT, PDF, or DOCX formats). You do not need to purchase components, design real boards, or execute physical wiring tasks for this stage.
+                    <div id="faq-content-1" class="hidden px-6 pb-5 text-xs text-mdOnSurfaceVariant leading-relaxed border-t border-slate-100 pt-3.5 font-semibold">
+                        Nope! Minor projects are strictly <strong class="text-mdOnSurface">softcopy-only submissions</strong> (PPT, PDF, or DOCX formats). You do not need to buy parts, design real boards, or wire components for this stage.
                     </div>
                 </div>
 
                 <!-- FAQ Item 2 -->
-                <div class="border-2 border-white bg-brutalCard overflow-hidden transition-all duration-150">
-                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left flex items-center justify-between text-slate-200 hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-black/20">
+                <div class="bg-white rounded-3xl border border-[#E1E2EC] overflow-hidden shadow-sm hover:shadow-md3-1 transition-all">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left flex items-center justify-between text-mdOnSurface hover:text-mdPrimary font-extrabold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-[#F0F4F9]/30">
                         <span>Can we change our project idea from minor to major phase?</span>
-                        <i id="faq-icon-2" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-brutalYellow"></i>
+                        <i id="faq-icon-2" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-mdSecondary"></i>
                     </button>
-                    <div id="faq-content-2" class="hidden px-6 pb-5 text-xs text-slate-400 leading-relaxed border-t border-white/10 pt-3 font-medium">
-                        No, the core guideline requires students to <strong class="text-white">transition with the same idea</strong>. Your Major Project consists of taking the conceptual model outlined in your Minor softcopy report and materializing it into a real, working physical prototype in the lab.
+                    <div id="faq-content-2" class="hidden px-6 pb-5 text-xs text-mdOnSurfaceVariant leading-relaxed border-t border-slate-100 pt-3.5 font-semibold">
+                        No, school guidelines state you must <strong class="text-mdOnSurface">transition with the exact same idea</strong>. Your Major Project is built from the conceptual slide blueprint you uploaded during your Minor project.
                     </div>
                 </div>
 
                 <!-- FAQ Item 3 -->
-                <div class="border-2 border-white bg-brutalCard overflow-hidden transition-all duration-150">
-                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left flex items-center justify-between text-slate-200 hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-black/20">
+                <div class="bg-white rounded-3xl border border-[#E1E2EC] overflow-hidden shadow-sm hover:shadow-md3-1 transition-all">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left flex items-center justify-between text-mdOnSurface hover:text-mdPrimary font-extrabold text-xs sm:text-sm uppercase tracking-wide focus:outline-none bg-[#F0F4F9]/30">
                         <span>What specific parameters must our Idea Report contain?</span>
-                        <i id="faq-icon-3" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-brutalYellow"></i>
+                        <i id="faq-icon-3" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 text-mdSecondary"></i>
                     </button>
-                    <div id="faq-content-3" class="hidden px-6 pb-5 text-xs text-slate-400 leading-relaxed border-t border-white/10 pt-3 font-medium">
-                        Your softcopy file must strictly include: <strong class="text-white">Project Name, Problem Statement, Proposed Solution, Working Principle, Required Items with Costing</strong>, and the <strong class="text-white">Team Members' Names clearly marked with their exact Class & Section</strong>.
+                    <div id="faq-content-3" class="hidden px-6 pb-5 text-xs text-mdOnSurfaceVariant leading-relaxed border-t border-slate-100 pt-3.5 font-semibold">
+                        Your file must include: <strong class="text-mdOnSurface">Project Name, Problem Statement, Solution, Working Principle, Required Items & Costing</strong>, and the <strong class="text-mdOnSurface">Team Members' Names along with proper Class & Section details</strong>.
                     </div>
                 </div>
             </div>
+
         </div>
 
     </main>
 
-    <!-- Footer Area -->
-    <footer class="mt-24 border-t-4 border-white bg-black py-12">
+    <!-- Material Design Footer -->
+    <footer class="mt-24 border-t border-[#E1E2EC] bg-white py-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
-                <div class="flex items-center justify-center sm:justify-start space-x-2 text-white mb-2">
-                    <div class="w-2 h-2 bg-brutalYellow border border-white"></div>
-                    <span class="font-black uppercase text-sm tracking-wider">Brighton ATL Lab Repository</span>
+                <div class="flex items-center justify-center sm:justify-start space-x-2.5 text-mdPrimary mb-2">
+                    <div class="w-3 h-3 bg-mdSecondary rounded-full shadow-sm"></div>
+                    <span class="font-display font-black uppercase text-sm tracking-wider">Brighton Project Portal</span>
                 </div>
-                <p class="text-xs text-slate-400 max-w-sm font-medium">
-                    Supporting design thinking, electronic calibration, and system architecture structures. Published as open resources.
+                <p class="text-xs text-[#44474F] max-w-sm font-semibold">
+                    Supporting creative thinking, electronic logic assembly, and systems calibration structures in school labs.
                 </p>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="https://github.com" target="_blank" class="p-3 border-2 border-white bg-brutalCard text-white hover:bg-slate-800 hover:translate-y-[-2px] shadow-[3px_3px_0px_0px_#FFFFFF] transition-all flex items-center justify-center">
+                <a href="https://github.com" target="_blank" class="p-3 border border-[#E1E2EC] bg-mdBackground text-mdPrimary rounded-2xl hover:bg-[#D3E3FD]/50 transition-all shadow-sm">
                     <i data-lucide="github" class="w-5 h-5"></i>
                 </a>
             </div>
         </div>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-white/10 text-center text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-slate-100 text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
             &copy; 2026 Brighton School Tinkering Labs. Distributed under open education guidelines.
         </div>
     </footer>
 
-    <!-- Interactive JS Functionality -->
+    <!-- Interactive Navigation & Timing JS Logic -->
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Tab Switcher
+        // 1. Tab Switcher
         function switchTab(tab) {
             const btnMinor = document.getElementById('tab-btn-minor');
             const btnMajor = document.getElementById('tab-btn-major');
@@ -579,11 +591,11 @@
             const contentMajor = document.getElementById('content-major');
 
             if (tab === 'minor') {
-                // Update buttons with Neo-Brutalist Active and Inactive classes
-                btnMinor.className = "flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-black bg-brutalCyan shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3";
-                btnMajor.className = "flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-white bg-brutalBg hover:bg-slate-900 shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3";
+                // Update navigation tab designs (Material Tonal Tab Selector style)
+                btnMinor.className = "flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 bg-mdPrimary text-white shadow-md3-1";
+                btnMajor.className = "flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 text-mdOnSurfaceVariant hover:bg-[#D3E3FD]/50";
                 
-                // Show/Hide contents
+                // Show/Hide page views
                 contentMinor.classList.remove('hidden');
                 setTimeout(() => {
                     contentMinor.classList.remove('opacity-0', 'translate-y-4');
@@ -597,11 +609,11 @@
                 }, 150);
 
             } else {
-                // Update buttons with Neo-Brutalist Active and Inactive classes
-                btnMajor.className = "flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-white bg-brutalPurple shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3";
-                btnMinor.className = "flex-1 py-4 px-6 border-4 border-white font-black text-base uppercase tracking-wider text-white bg-brutalBg hover:bg-slate-900 shadow-[5px_5px_0px_0px_#FFFFFF] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center space-x-3";
+                // Update navigation tab designs
+                btnMajor.className = "flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 bg-mdPrimary text-white shadow-md3-1";
+                btnMinor.className = "flex-1 sm:flex-initial py-2 px-5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center space-x-2 text-mdOnSurfaceVariant hover:bg-[#D3E3FD]/50";
                 
-                // Show/Hide contents
+                // Show/Hide page views
                 contentMajor.classList.remove('hidden');
                 setTimeout(() => {
                     contentMajor.classList.remove('opacity-0', 'translate-y-4');
@@ -616,7 +628,36 @@
             }
         }
 
-        // Submission Checklist progress tracker
+        // 2. Countdown Timer Logic (September 4th, 2026)
+        const targetDate = new Date("September 4, 2026 23:59:59").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // 3. Submission Checklist Progress Tracker
         function updateChecklistProgress() {
             const checkboxes = document.querySelectorAll('#checklist-container input[type="checkbox"]');
             const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
@@ -626,7 +667,7 @@
             document.getElementById('checklist-progress-bar').style.width = percentage + "%";
         }
 
-        // Accordion FAQs toggling
+        // 4. Playful FAQ Accordion Controls
         function toggleFaq(id) {
             const content = document.getElementById('faq-content-' + id);
             const icon = document.getElementById('faq-icon-' + id);
